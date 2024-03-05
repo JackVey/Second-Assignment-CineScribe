@@ -3,6 +3,8 @@ import org.json.JSONObject;
 import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class Menu{
@@ -77,11 +79,8 @@ public class Menu{
         else{
             Movie movie = new Movie(new ArrayList<>(), "",0);
             displayMovieResult(movie.getMovieData(input));
+            displayMoviesSearchMenu();
         }
-    }
-
-    static void displayErrorPage(){
-
     }
 
     static void clearPage(){
@@ -89,7 +88,28 @@ public class Menu{
         System.out.flush();
     }
     static void displayMovieResult(String res){
-
+        clearPage();
+        JSONObject json = new JSONObject(res);
+        Iterator<String> keys = json.keys();
+        while (keys.hasNext()){
+            String key = keys.next();
+            if (key.equals("Ratings")){
+                System.out.println(Color.GREEN_BOLD_BRIGHT + "Ratings:");
+                for (Object i : json.getJSONArray("Ratings")){
+                    Color.ChangeTextOrBackgroundColor(Color.RED_BOLD_BRIGHT);
+                    System.out.println("Source: " + Color.YELLOW_BRIGHT + ((JSONObject)i).getString("Source"));
+                    System.out.println("Value: " + Color.YELLOW_BRIGHT + ((JSONObject)i).getString("Value"));
+                }
+                continue;
+            }
+            if (key.equals("Response"))
+                continue;
+            Color.ChangeTextOrBackgroundColor(Color.GREEN_BOLD_BRIGHT);
+            System.out.println(key + ": " + Color.RED + json.getString(key));
+        }
+        System.out.println("Press enter to continue...");
+        GetInput.returnStringInput();
+        clearPage();
     }
 
 }
