@@ -86,6 +86,8 @@ public class Menu{
     static void clearPage(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
+        //ANSI code to clear buffer
+        System.out.print("\u001B[K");
     }
     static void displayMovieResult(String res){
         clearPage();
