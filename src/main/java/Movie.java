@@ -11,6 +11,7 @@ public class Movie {
     int ImdbVotes;
     ArrayList<String> actorsList;
     String rating;
+    String type;
 
     public Movie(ArrayList<String> actorsList, String rating, int ImdbVotes){
         //TODO --> (Write a proper constructor using the get_from_api functions)
@@ -62,5 +63,8 @@ public class Movie {
             actorsList.add(name);
         }
         return actorsList;
+    }
+    public String getMovieType(JSONObject json){
+        return json.getString("Type");
     }
 }
