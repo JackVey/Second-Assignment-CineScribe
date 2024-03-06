@@ -9,7 +9,7 @@ public class Actors {
     public static final String API_KEY = "VnLG0YDlpKoX0JtlKPaecnCeJq5FIAgfD4LdWkcP";   // TODO --> add your api key about Actors here
     String netWorth;
     Boolean isAlive;
-
+    float height;
     public Actors(String netWorth, boolean isAlive){
         //TODO --> (Write a proper constructor using the get_from_api functions)
     }
@@ -65,5 +65,8 @@ public class Actors {
         String date = json.getString("death");
         return date;
     }
-
+    public float getActorsHeight(String actorsInfoJson){
+        JSONObject json = new JSONObject(actorsInfoJson.substring(1, actorsInfoJson.length() - 1));
+        return json.getFloat("height");
+    }
 }
