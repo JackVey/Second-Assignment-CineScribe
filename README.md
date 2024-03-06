@@ -1,4 +1,3 @@
-
 # Project Cinema search v7.6 🎥
 
 ## Description 📝
