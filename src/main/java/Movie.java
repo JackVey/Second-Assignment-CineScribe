@@ -1,3 +1,5 @@
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -39,7 +41,8 @@ public class Movie {
     public int getImdbVotesViaApi(String moviesInfoJson){
         //TODO --> (This function must change and return the "ImdbVotes" as an Integer)
         // NOTICE :: you are not permitted to convert this function to return a String instead of an int !!!
-        int ImdbVotes = 0;
+        JSONObject json = new JSONObject(moviesInfoJson);
+        int ImdbVotes = json.getInt("imdbVotes");
         return ImdbVotes;
     }
 
