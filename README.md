@@ -5,7 +5,7 @@
 ### Purpose 🎯
 This program retrieves information about a movie using the [OMDb API](https://www.omdbapi.com/) and an actor using [API Ninjas](https://api-ninjas.com).
 ### Develop 👨‍💻
-This is a console program wrriten with java JDK v21.0 and Gradle package manager 8.6 and Postman v10.23.
+This is a console program wrriten with java JDK v21.0.2 and Gradle package manager 8.6 and Postman v10.23.
 ### Functions 🤖
 You can search for a movie or an actor. 
 For movies resault page, You can select one of the actors in actors list of the movie to lookup!
