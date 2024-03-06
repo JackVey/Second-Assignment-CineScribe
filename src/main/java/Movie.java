@@ -49,7 +49,8 @@ public class Movie {
     public String getRatingViaApi(String moviesInfoJson){
         //TODO --> (This function must return the rating in the "Ratings" part
         // where the source is "Internet Movie Database")  -->
-        String rating = "";
+        JSONObject json = new JSONObject(moviesInfoJson);
+        String rating = ((JSONObject) json.getJSONArray("Ratings").get(0)).getString("Value");
         return rating;
     }
 
