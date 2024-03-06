@@ -1,3 +1,5 @@
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,7 +25,7 @@ public class Actors {
                     name.replace(" ", "+")+"&apikey="+API_KEY);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("X-Api-Key", API_KEY);
-            System.out.println(connection);
+//            System.out.println(connection);
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String inputLine;
@@ -45,19 +47,22 @@ public class Actors {
     }
     public double getNetWorthViaApi(String actorsInfoJson){
         //TODO --> (This function must return the "NetWorth")
-        double result = 0.0;
+        JSONObject json = new JSONObject(actorsInfoJson.substring(1, actorsInfoJson.length() - 1));
+        double result = json.getDouble("net_worth");
         return result;
     }
 
     public boolean isAlive(String actorsInfoJson){
         //TODO --> (If your chosen actor is alive it must return true otherwise it must return false)
-        boolean statues = false;
+        JSONObject json = new JSONObject(actorsInfoJson.substring(1, actorsInfoJson.length() - 1));
+        boolean statues = json.getBoolean("is_alive");
         return statues;
     }
 
     public String getDateOfDeathViaApi(String actorsInfoJson){
         //TODO --> (If your chosen actor is deceased it must return the date of death)  -->
-        String date = "";
+        JSONObject json = new JSONObject(actorsInfoJson.substring(1, actorsInfoJson.length() - 1));
+        String date = json.getString("death");
         return date;
     }
 
