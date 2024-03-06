@@ -1,15 +1,15 @@
+import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Objects;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class Menu{
 
     static void displayMainMenu() throws IOException {
+        clearPage();
         Color.ChangeTextOrBackgroundColor(Color.GREEN);
         System.out.print("~~~~~~~~~~~~~~~~~ ");
         Color.ChangeTextOrBackgroundColor(Color.RED_BOLD);
@@ -56,11 +56,27 @@ public class Menu{
                 break;
         }
     }
-
-    static void displayActorsSearchMenu(){
-
+    static void displayActorsSearchMenu() throws IOException {
+        clearPage();
+        Color.ChangeTextOrBackgroundColor(Color.GREEN);
+        System.out.print("~~~~~~~~~~~~~~~~~ ");
+        Color.ChangeTextOrBackgroundColor(Color.RED_BOLD);
+        System.out.print("Actor search menu");
+        Color.ChangeTextOrBackgroundColor(Color.GREEN);
+        System.out.print(" ~~~~~~~~~~~~~~~~~\n");
+        Color.ChangeTextOrBackgroundColor(Color.CYAN_BRIGHT);
+        System.out.print("Input a title to search or type BACK to return to main menu\n");
+        String input = GetInput.returnStringInput();
+        if (input.equals("BACK")){
+            clearPage();
+            displayMainMenu();
+        }
+        else{
+            Actors actor = new Actors("", true);
+            displayActorResult(actor.getActorData(input));
+            displayActorsSearchMenu();
+        }
     }
-
     static void displayMoviesSearchMenu() throws IOException {
         clearPage();
         Color.ChangeTextOrBackgroundColor(Color.GREEN);
@@ -82,36 +98,66 @@ public class Menu{
             displayMoviesSearchMenu();
         }
     }
-
     static void clearPage(){
-        System.out.print("\033[H\033[2J");
+        System.out.print("\033\143");
         System.out.flush();
         //ANSI code to clear buffer
         System.out.print("\u001B[K");
     }
-    static void displayMovieResult(String res){
+    static void displayMovieResult(String res) throws IOException {
         clearPage();
-        JSONObject json = new JSONObject(res);
-        Iterator<String> keys = json.keys();
-        while (keys.hasNext()){
-            String key = keys.next();
-            if (key.equals("Ratings")){
-                System.out.println(Color.GREEN_BOLD_BRIGHT + "Ratings:");
-                for (Object i : json.getJSONArray("Ratings")){
-                    Color.ChangeTextOrBackgroundColor(Color.RED_BOLD_BRIGHT);
-                    System.out.println("Source: " + Color.YELLOW_BRIGHT + ((JSONObject)i).getString("Source"));
-                    System.out.println("Value: " + Color.YELLOW_BRIGHT + ((JSONObject)i).getString("Value"));
+        try {
+            JSONObject json = new JSONObject(res);
+            Iterator<String> keys = json.keys();
+            while (keys.hasNext()) {
+                String key = keys.next();
+                if (key.equals("Ratings")) {
+                    System.out.println(Color.GREEN_BOLD_BRIGHT + "Ratings:");
+                    for (Object i : json.getJSONArray("Ratings")) {
+                        Color.ChangeTextOrBackgroundColor(Color.RED_BOLD_BRIGHT);
+                        System.out.println("Source: " + Color.YELLOW_BRIGHT + ((JSONObject) i).getString("Source"));
+                        System.out.println("Value: " + Color.YELLOW_BRIGHT + ((JSONObject) i).getString("Value"));
+                    }
+                    continue;
                 }
-                continue;
+                if (key.equals("Response"))
+                    continue;
+                Color.ChangeTextOrBackgroundColor(Color.GREEN_BOLD_BRIGHT);
+                System.out.println(key + ": " + Color.RED + json.getString(key));
             }
-            if (key.equals("Response"))
-                continue;
-            Color.ChangeTextOrBackgroundColor(Color.GREEN_BOLD_BRIGHT);
-            System.out.println(key + ": " + Color.RED + json.getString(key));
+            System.out.println("Press enter to continue...");
+            GetInput.returnStringInput();
+            clearPage();
         }
-        System.out.println("Press enter to continue...");
-        GetInput.returnStringInput();
-        clearPage();
+        catch (Exception e){
+            displayMoviesSearchMenu();
+        }
+    }
+    static void displayActorResult(String res) throws IOException {
+        try {
+            clearPage();
+            JSONObject json = new JSONObject(res.substring(1, res.length() - 1));
+            Iterator<String> keys = json.keys();
+            while (keys.hasNext()) {
+                String key = keys.next();
+                if (key.equals("occupation")) {
+                    System.out.println(Color.GREEN_BOLD_BRIGHT + "Occupation:");
+                    for (Object i : json.getJSONArray("occupation")) {
+                        Color.ChangeTextOrBackgroundColor(Color.RED_BOLD_BRIGHT);
+                        System.out.println(i);
+                    }
+                    continue;
+                }
+                Color.ChangeTextOrBackgroundColor(Color.GREEN_BOLD_BRIGHT);
+                System.out.println(key + ": " + Color.RED + json.get(key.toString()));
+            }
+            System.out.println("Press enter to continue...");
+            GetInput.returnStringInput();
+            clearPage();
+        }
+        catch (Exception e){
+            displayActorsSearchMenu();
+        }
     }
 
 }
