@@ -1,3 +1,4 @@
+import java.io.Console;
 import java.util.Scanner;
 
 public class GetInput {
@@ -19,7 +20,8 @@ public class GetInput {
             Color.ChangeTextOrBackgroundColor(Color.PURPLE_BRIGHT);
             System.out.print("Input: ");
             Color.ChangeTextOrBackgroundColor(Color.GREEN);
-            return in.nextLine();
+            Console console = System.console();
+            return console.readLine();
         }
         catch (Exception e){
             return null;
