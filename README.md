@@ -9,7 +9,7 @@ This is a console program wrriten with java JDK v21.0.2 and Gradle package manag
 ### Functions 🤖
 You can search for a movie or an actor. 
 For movies resault page, You can select one of the actors in actors list of the movie to lookup!
-## How to install 🔧🔩
+## How to use🔧🔩
 1- Clone the project using gitbash or powershell(i prefer gitbash).
 ```sh
 git clone https://github.com/JackVey/Second-Assignment-CineScribe.git
