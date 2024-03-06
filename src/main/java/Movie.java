@@ -1,3 +1,5 @@
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -5,10 +7,11 @@ import java.net.URLConnection;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 public class Movie {
-    public static final String API_KEY = "Your API_KEY";   // TODO --> add your api key about Movie here
+    public static final String API_KEY = "f010a9f9";   // TODO --> add your api key about Movie here
     int ImdbVotes;
     ArrayList<String> actorsList;
     String rating;
+    String type;
 
     public Movie(ArrayList<String> actorsList, String rating, int ImdbVotes){
         //TODO --> (Write a proper constructor using the get_from_api functions)
@@ -39,18 +42,30 @@ public class Movie {
     public int getImdbVotesViaApi(String moviesInfoJson){
         //TODO --> (This function must change and return the "ImdbVotes" as an Integer)
         // NOTICE :: you are not permitted to convert this function to return a String instead of an int !!!
-        int ImdbVotes = 0;
-        return ImdbVotes;
+        JSONObject json = new JSONObject(moviesInfoJson);
+        String ImdbVotes = json.getString("imdbVotes").replace(",","");
+        return Integer.parseInt(ImdbVotes);
     }
 
     public String getRatingViaApi(String moviesInfoJson){
         //TODO --> (This function must return the rating in the "Ratings" part
         // where the source is "Internet Movie Database")  -->
-        String rating = "";
+        JSONObject json = new JSONObject(moviesInfoJson);
+        String rating = ((JSONObject) json.getJSONArray("Ratings").get(0)).getString("Value");
         return rating;
     }
 
-    public void getActorListViaApi(String movieInfoJson){
+    public ArrayList<String> getActorListViaApi(String movieInfoJson){
         //TODO --> (This function must return the "Actors" in actorsList)
+        JSONObject json = new JSONObject(movieInfoJson);
+        String[] splitNames = json.getString("Actors").split(", ");
+        ArrayList<String> actorsList = new ArrayList<>();
+        for (String name : splitNames) {
+            actorsList.add(name);
+        }
+        return actorsList;
+    }
+    public String getMovieType(JSONObject json){
+        return json.getString("Type");
     }
 }
