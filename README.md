@@ -10,7 +10,7 @@ This is a console program wrriten with java JDK v21.0.2 and Gradle package manag
 You can search for a movie or an actor. 
 For movies resault page, You can select one of the actors in actors list of the movie to lookup!
 ## How to install 🔧🔩
-1- Clone the project using gitbash or powershell(i prefer gitbash). Do not use CMD.
+1- Clone the project using gitbash or powershell(i prefer gitbash).
 ```sh
 git clone https://github.com/JackVey/Second-Assignment-CineScribe.git
 ```
@@ -25,6 +25,6 @@ For instance: "C:\Users\varin\Documents\Intellij\new\Second-Assignment-CineScrib
 java -cp "[address to project directory]\JSONjar\json-20240205.jar;" Main
 ```
 5- Enjoy!👍
-
+Note: Using cmd for running program may cause some issues. It is recommended to use powershel or Uinx terminals.
 ## License 🪪
 Feel free to use the project!👍👌
