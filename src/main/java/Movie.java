@@ -57,7 +57,8 @@ public class Movie {
 
     public ArrayList<String> getActorListViaApi(String movieInfoJson){
         //TODO --> (This function must return the "Actors" in actorsList)
-        String[] splitNames = movieInfoJson.split(", ");
+        JSONObject json = new JSONObject(movieInfoJson);
+        String[] splitNames = json.getString("Actors").split(", ");
         ArrayList<String> actorsList = new ArrayList<>();
         for (String name : splitNames) {
             actorsList.add(name);
