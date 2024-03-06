@@ -107,6 +107,8 @@ public class Menu{
     static void displayMovieResult(String res) throws IOException {
         clearPage();
         try {
+            Movie movie = new Movie(new ArrayList<>(), "",0);
+            ArrayList<String> actorsList = movie.getActorListViaApi(res);
             JSONObject json = new JSONObject(res);
             Iterator<String> keys = json.keys();
             while (keys.hasNext()) {
@@ -125,8 +127,23 @@ public class Menu{
                 Color.ChangeTextOrBackgroundColor(Color.GREEN_BOLD_BRIGHT);
                 System.out.println(key + ": " + Color.RED + json.getString(key));
             }
-            System.out.println("Press enter to continue...");
-            GetInput.returnStringInput();
+            System.out.println("Press enter to continue or select an actor to lookup");
+            int i = 1;
+            for (String j : actorsList){
+                System.out.println(Color.CYAN_BRIGHT + i +"- " + Color.GREEN_BRIGHT + j);
+                i++;
+            }
+            String input = GetInput.returnStringInput();
+            for (int j = 0; j < input.length(); j++) {
+                if (!Character.isDigit(input.charAt(j))) {
+                    clearPage();
+                    return;
+                }
+            }
+            if (Integer.parseInt(input) <= i){
+                Actors actor = new Actors("", true);
+                displayActorResult(actor.getActorData(actorsList.get(Integer.parseInt(input))));
+            }
             clearPage();
         }
         catch (Exception e){
